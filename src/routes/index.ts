@@ -6,6 +6,7 @@ import { ErrorResponse } from "../shared/models/error-response";
 import { StatusCodes } from "../shared/enums/status-codes";
 import swaggerUi from "swagger-ui-express";
 import { swaggerDocument } from "../../swagger";
+import { tasksRoutes } from "../domains/tasks/tasks.routes";
 
 export class ApplicationRouter {
   private baseUrl = sanitizedConfig.BASE_URL;
@@ -17,6 +18,7 @@ export class ApplicationRouter {
 
   public getRoutes(): Router {
     this.router.use(`${this.baseUrl}/users`, usersRoutes);
+    this.router.use(`${this.baseUrl}/tasks`, tasksRoutes);
 
     this.router.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
     this.router.all(`*`, (req: Request) => {
