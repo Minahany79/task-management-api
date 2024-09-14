@@ -1,5 +1,7 @@
 import { DataSourceOptions, DataSource } from "typeorm";
 import { sanitizedConfig } from "../../../config";
+import { SeedRole } from "./seeders/roles";
+import { UserRoles } from "../../shared/models/user-roles";
 
 const connectOptions: DataSourceOptions = {
   type: "mysql",
@@ -19,6 +21,7 @@ export const DB = new DataSource(connectOptions);
 
 export const initDB = async () => {
   const db = !DB.isInitialized ? await DB.initialize() : DB;
+  await SeedRole(UserRoles.User.name);
 
   return db;
 };
