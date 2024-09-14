@@ -249,6 +249,222 @@ export const swaggerDocument = {
         },
       },
     },
+
+    "/api/v1/tasks/": {
+      post: {
+        tags: ["Tasks"],
+        summary: "Create new task",
+        consumes: ["application/json"],
+        parameters: [
+          {
+            in: "body",
+            name: "CreateTask",
+            schema: {
+              type: "object",
+              properties: {
+                title: {
+                  type: "string",
+                },
+                description: {
+                  type: "string",
+                },
+              },
+            },
+          },
+        ],
+        responses: {
+          "200": {
+            description: "ok",
+          },
+          "400": {
+            description: "bad request",
+          },
+          "401": {
+            description: "Un Authorized",
+          },
+          "403": {
+            description: "Forbidden",
+          },
+          "404": {
+            description: "Not Found",
+          },
+          "500": {
+            description: "internal server error",
+          },
+        },
+      },
+      get: {
+        tags: ["Tasks"],
+        summary: "Get all tasks",
+        responses: {
+          "200": {
+            description: "ok",
+          },
+          "400": {
+            description: "bad request",
+          },
+          "401": {
+            description: "Un Authorized",
+          },
+          "403": {
+            description: "Forbidden",
+          },
+          "404": {
+            description: "Not Found",
+          },
+          "500": {
+            description: "internal server error",
+          },
+        },
+      },
+    },
+
+    "/api/v1/tasks/{id}": {
+      get: {
+        tags: ["Tasks"],
+        summary: "Get task by id",
+        parameters: [
+          {
+            in: "path",
+            name: "id",
+            type: "string",
+          },
+        ],
+        responses: {
+          "200": {
+            description: "ok",
+          },
+          "400": {
+            description: "bad request",
+          },
+          "401": {
+            description: "Un Authorized",
+          },
+          "403": {
+            description: "Forbidden",
+          },
+          "404": {
+            description: "Not Found",
+          },
+          "500": {
+            description: "internal server error",
+          },
+        },
+      },
+      put: {
+        tags: ["Tasks"],
+        summary: "Update task",
+        consumes: ["application/json"],
+        parameters: [
+          {
+            in: "path",
+            name: "id",
+            type: "string",
+          },
+          {
+            in: "body",
+            name: "update",
+            schema: {
+              type: "object",
+              properties: {
+                title: {
+                  type: "string",
+                },
+                description: {
+                  type: "string",
+                },
+              },
+            },
+          },
+        ],
+        responses: {
+          "200": {
+            description: "ok",
+          },
+          "400": {
+            description: "bad request",
+          },
+          "401": {
+            description: "Un Authorized",
+          },
+          "403": {
+            description: "Forbidden",
+          },
+          "404": {
+            description: "Not Found",
+          },
+          "500": {
+            description: "internal server error",
+          },
+        },
+      },
+
+      delete: {
+        tags: ["Tasks"],
+        summary: "Delete task",
+        parameters: [
+          {
+            in: "path",
+            name: "id",
+            type: "string",
+          },
+        ],
+        responses: {
+          "200": {
+            description: "ok",
+          },
+          "400": {
+            description: "bad request",
+          },
+          "401": {
+            description: "Un Authorized",
+          },
+          "403": {
+            description: "Forbidden",
+          },
+          "404": {
+            description: "Not Found",
+          },
+          "500": {
+            description: "internal server error",
+          },
+        },
+      },
+    },
+
+    "/api/v1/tasks/{id}/complete": {
+      patch: {
+        tags: ["Tasks"],
+        summary: "Mark task as completed",
+        parameters: [
+          {
+            in: "path",
+            name: "id",
+            type: "string",
+          },
+        ],
+        responses: {
+          "200": {
+            description: "ok",
+          },
+          "400": {
+            description: "bad request",
+          },
+          "401": {
+            description: "Un Authorized",
+          },
+          "403": {
+            description: "Forbidden",
+          },
+          "404": {
+            description: "Not Found",
+          },
+          "500": {
+            description: "internal server error",
+          },
+        },
+      },
+    },
   },
   securityDefinitions: {
     bearerAuth: {

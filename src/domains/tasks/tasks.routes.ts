@@ -66,7 +66,7 @@ class TasksRouter implements IRouterBase<TasksController> {
     );
 
     this.router.patch(
-      "/:id",
+      "/:id/complete",
       authenticationAndAuthorizationMiddleware([UserRoles.User.name]),
       TasksValidator.updateTaskStatus(),
       asyncHandler(async (req: Request, res: Response) => {
