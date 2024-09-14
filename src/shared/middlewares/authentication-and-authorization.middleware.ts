@@ -5,27 +5,34 @@ import { ErrorResponse } from "../models/error-response";
 
 export const authenticationAndAuthorizationMiddleware = (roles: string[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    const token = req.header("Authorization")?.replace("Bearer ", "");
+    try {
+      const token = req.header("Authorization")?.replace("Bearer ", "");
 
-    if (!token) {
-      throw new ErrorResponse("unAuthorized", StatusCodes.UnAuthorized);
-    }
+      if (!token) {
+        throw new ErrorResponse("unAuthorized", StatusCodes.UnAuthorized);
+      }
 
-    const jwtService = new JwtService();
-    const decodedToken = jwtService.verify(token);
+      const jwtService = new JwtService();
+      const decodedToken = jwtService.verify(token);
 
-    const userRole: string = decodedToken.role;
+      const userRole: string = decodedToken.role;
 
-    if (roles.includes(userRole)) {
-      res.locals.user = {
-        userId: decodedToken.userId,
-        userEmail: decodedToken.userEmail,
-        userRole: decodedToken.userRole,
-        token,
-      };
-      next();
-    } else {
-      throw new ErrorResponse("Access Denied", StatusCodes.Forbidden);
+      if (roles.includes(userRole)) {
+        res.locals.user = {
+          userId: decodedToken.userId,
+          userEmail: decodedToken.userEmail,
+          userRole: decodedToken.userRole,
+          token,
+        };
+        next();
+      } else {
+        throw new ErrorResponse("Access Denied", StatusCodes.Forbidden);
+      }
+    } catch (error: any) {
+      if (error.name === "TokenExpiredError" || error.name === "JsonWebTokenError") {
+        throw new ErrorResponse(error.message, StatusCodes.UnAuthorized, error);
+      }
+      throw new ErrorResponse(error.message, StatusCodes.InternalServerError, error);
     }
   };
 };
