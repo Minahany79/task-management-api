@@ -13,6 +13,18 @@ export const swaggerDocument = {
   },
   host: sanitizedConfig.NODE_ENV == "prod" ? sanitizedConfig.DEPLOYMENT_HOST : `localhost:${sanitizedConfig.PORT}`,
   paths: {
+    "/api/v1/Misc/Ping": {
+      get: {
+        tags: ["Ping"],
+        summary: "Checks if the service is working",
+        responses: {
+          "200": {
+            description: "success",
+          },
+        },
+      },
+    },
+
     "/api/v1/Users/Login": {
       post: {
         tags: ["Users"],

@@ -7,8 +7,9 @@ import { StatusCodes } from "../shared/enums/status-codes";
 import swaggerUi from "swagger-ui-express";
 import { swaggerDocument } from "../../swagger";
 import { tasksRoutes } from "../domains/tasks/tasks.routes";
+import { miscRoutes } from "../domains/misc";
 
-export class ApplicationRouter {
+class ApplicationRouter {
   private baseUrl = sanitizedConfig.BASE_URL;
   router: Router;
 
@@ -17,6 +18,7 @@ export class ApplicationRouter {
   }
 
   public getRoutes(): Router {
+    this.router.use(`${this.baseUrl}/misc`, miscRoutes);
     this.router.use(`${this.baseUrl}/users`, usersRoutes);
     this.router.use(`${this.baseUrl}/tasks`, tasksRoutes);
 
