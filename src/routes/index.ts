@@ -1,0 +1,29 @@
+import { Request, Router } from "express";
+import { sanitizedConfig } from "../../config";
+import { errorHandler } from "../shared/middlewares/global-error-handler";
+import { ErrorResponse } from "../shared/models/error-response";
+import { StatusCodes } from "../shared/enums/status-codes";
+import swaggerUi from "swagger-ui-express";
+import { swaggerDocument } from "../../swagger";
+
+export class ApplicationRouter {
+  private baseUrl = sanitizedConfig.BASE_URL;
+  router: Router;
+
+  constructor() {
+    this.router = Router();
+  }
+
+  public getRoutes(): Router {
+    this.router.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+    this.router.all(`*`, (req: Request) => {
+      throw new ErrorResponse(`Resource not found: ${req.originalUrl}`, StatusCodes.NotFound);
+    });
+
+    this.router.use(errorHandler);
+
+    return this.router;
+  }
+}
+
+export const applicationRoutes: Router = new ApplicationRouter().getRoutes();

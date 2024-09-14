@@ -1,0 +1,24 @@
+name: Deploy to Development Server
+
+# This workflow triggers on push to 'development' and when a PR is merged into 'development'.
+on:
+  push:
+    branches:
+      - development
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Pull and Deploy Application
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOYMENT_HOST }} 'cd /home/Node-js-Demo && git pull origin development && npm install && npm run migrate-and-start'
