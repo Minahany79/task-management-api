@@ -1,5 +1,6 @@
 import { Request, Router } from "express";
 import { sanitizedConfig } from "../../config";
+import { usersRoutes } from "../domains/users/users.routes";
 import { errorHandler } from "../shared/middlewares/global-error-handler";
 import { ErrorResponse } from "../shared/models/error-response";
 import { StatusCodes } from "../shared/enums/status-codes";
@@ -15,6 +16,8 @@ export class ApplicationRouter {
   }
 
   public getRoutes(): Router {
+    this.router.use(`${this.baseUrl}/users`, usersRoutes);
+
     this.router.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
     this.router.all(`*`, (req: Request) => {
       throw new ErrorResponse(`Resource not found: ${req.originalUrl}`, StatusCodes.NotFound);
