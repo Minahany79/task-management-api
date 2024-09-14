@@ -1,27 +1,28 @@
 version: "3.8"
 
 services:
-  lms-authenticator-db:
-    image: lms-authenticator-postgres-db
+  db:
+    image: task-management-db
     build:
       context: .
-      dockerfile: dockerfile.postgres
+      dockerfile: dockerfile.db
     restart: always
     ports:
-      - "5435:5432"
+      - "3307:3306"
     volumes:
-      - db:/var/lib/postgresql/data
+      - db:/var/lib/mysql
 
-  lms-authenticator-be:
+  be:
+    image: task-management-be
     build:
       context: .
       dockerfile: dockerfile.be
     depends_on:
-      - lms-authenticator-db
+      - db
     ports:
-      - "3001:3001"
+      - "3000:3000"
     links:
-      - lms-authenticator-db
+      - db
     volumes:
       - ./:/app
 volumes:

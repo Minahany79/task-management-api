@@ -1,11 +1,14 @@
-FROM node:14
+FROM node:20
+
 WORKDIR /app
 
-RUN ls -a
+COPY package.json .
+RUN npm install --production
+
+RUN npm install -g pm2
+
 COPY . .
-RUN npm i
 
 EXPOSE 3000
-RUN npm install typeorm -g --save
 
-ENTRYPOINT ["npm", "run", "migrate-and-start"];
+CMD ["npm", "run", "migrate-and-start"]

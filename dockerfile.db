@@ -1,0 +1,12 @@
+# Use the official MySQL image from Docker Hub
+FROM mysql:8.0
+
+# Set environment variables for MySQL root user credentials
+ENV MYSQL_ROOT_PASSWORD=password
+ENV MYSQL_DATABASE=task_management_db
+
+# Expose port 3306 to connect to MySQL from outside
+EXPOSE 3306
+
+# Command to start MySQL
+CMD ["mysqld"]
