@@ -92,3 +92,10 @@ The folder structure of this app is explained below:
 | package.json        | Contains npm dependencies as well as build scripts                    |
 | .env.local          | environment file                                                      |
 | config.ts           | project configurations module                                         |
+| task_management_schema.sql           | database schema                                         |
+
+## Database ERD
+
+Database ERD for the task management system, including the users, roles, and tasks tables. This schema is designed to support the user-task relationship, where users can create and manage their tasks, and each user has a specific role
+
+![ERD Diagram](files/docs/task_management_erd.png)
