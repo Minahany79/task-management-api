@@ -49,6 +49,8 @@ npm install
 CREATE DATABASE task_management_db;
 ```
 
+- **IMPORTANT!** Read **jwt_token_sign_and_verify_configs.md** file to add key files
+
 - Applying DB migrations
 
 ```
