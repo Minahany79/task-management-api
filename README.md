@@ -63,6 +63,12 @@ npm run migration:run
 npm run start
 ```
 
+- Run unit tests
+
+```
+npm run test
+```
+
 - Build and run the project using **docker**
 
 ```
